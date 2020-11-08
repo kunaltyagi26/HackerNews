@@ -13,7 +13,7 @@ struct WebView: UIViewRepresentable {
     let url: String
     
     func makeUIView(context: Context) -> WKWebView {
-        guard let url = URL(string: self.url) else { fatalError("Invalid URL") }
+        guard let url = URL(string: self.url) else { return WKWebView.pageNotFound() }
         let urlRequest = URLRequest(url: url)
         let webView = WKWebView()
         webView.load(urlRequest)
@@ -21,6 +21,8 @@ struct WebView: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: WKWebView, context: Context) {
-        
+        guard let url = URL(string: self.url) else { return }
+        let urlRequest = URLRequest(url: url)
+        uiView.load(urlRequest)
     }
 }
